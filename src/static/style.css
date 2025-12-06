@@ -1,0 +1,87 @@
+:root {
+    --base: #1e1e2e;
+    --mantle: #181825;
+    --text: #cdd6f4;
+    --subtext: #a6adc8;
+    --surface: #313244;
+    --surface-hover: #45475a;
+    --blue: #89b4fa;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: var(--base);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+main {
+    background: var(--mantle);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--surface);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 100%;
+    max-width: 320px;
+}
+
+h1 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: var(--blue);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: flex-start;
+}
+
+label {
+    font-size: 0.9rem;
+    color: var(--subtext);
+    font-weight: 500;
+}
+
+input[type="file"] {
+    font-size: 0.9rem;
+    width: 100%;
+    color: var(--subtext);
+}
+
+input[type="file"]::file-selector-button {
+    background-color: var(--surface);
+    color: var(--text);
+    border: none;
+    padding: 0.5rem 0.8rem;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: var(--surface-hover);
+}
+
+input[type="submit"] {
+    width: 100%;
+    background-color: var(--blue);
+    color: var(--base);
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+input[type="submit"]:hover {
+    opacity: 0.9;
+}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>IBKR to IRPF</title>
+        <link rel="stylesheet" href="static/style.css">
+    </head>
+    <body>
+        <main>
+            <h1>IBKR to IRPF</h1>
+            <form action="/statements" method="post" enctype="multipart/form-data">
+                <label for="statement">Select statement (PDF)</label>
+                <input type="file" id="statement" name="statement" accept=".pdf">
+                <input type="submit" value="Upload & Process">
+            </form>
+        </main>
+    </body>
+</html>
