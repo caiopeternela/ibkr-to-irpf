@@ -15,7 +15,9 @@ def test_homepage():
 
 
 def test_process_statement():
-    files_payload = {"statement": ("IBKR_ANNUAL_STATEMENT.pdf", b"content", "application/pdf")}
+    files_payload = {
+        "statement": ("IBKR_ANNUAL_STATEMENT.pdf", b"content", "application/pdf")
+    }
 
     response = client.post("/statements", files=files_payload)
 
