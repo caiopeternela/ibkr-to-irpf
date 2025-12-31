@@ -22,4 +22,4 @@ def test_process_statement():
     response = client.post("/statements", files=files_payload)
 
     assert response.status_code == HTTPStatus.OK
-    assert response.json() == {"filename": "IBKR_ANUAL_STATEMENT.pdf"}
+    assert response.json() == {"filename": "IBKR_ANNUAL_STATEMENT.pdf"}
