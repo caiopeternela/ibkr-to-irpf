@@ -1,4 +1,4 @@
-# IBKR to IRPF
+# 🦁 IBKR to IRPF
 
 A minimalist tool to process Interactive Brokers (IBKR) statements for Brazilian Income Tax (IRPF) purposes 🦁
 
