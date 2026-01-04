@@ -1,0 +1,214 @@
+{% if error %}
+<div class="error">
+    <p>⚠️ {{ error }}</p>
+</div>
+{% else %}
+<div class="results">
+    <div class="results-header">
+        <h3>📋 Declaração IRPF {{ year }}</h3>
+        <p class="subtitle">
+            {{ total_trades }} operações de compra processadas
+        </p>
+    </div>
+
+    <div class="results-grid">
+        <div class="result-item">
+            <label>Total Aquisição (USD)</label>
+            <div class="value">{{ total_usd|format_usd }}</div>
+        </div>
+        <div class="result-item">
+            <label>Total Aquisição (BRL)</label>
+            <div class="value">{{ total_brl|format_brl }}</div>
+        </div>
+    </div>
+
+    {% for holding in holdings %}
+    <div class="declaration-card">
+        <div class="declaration-header">
+            <span class="ticker">{{ holding.symbol }}</span>
+            <span class="description">{{ holding.description }}</span>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <label>Quantidade</label>
+                <span>{{ holding.total_quantity|int }}</span>
+            </div>
+            <div class="info-item">
+                <label>Total (USD)</label>
+                <span>{{ holding.total_acquisition_usd|format_usd }}</span>
+            </div>
+            <div class="info-item">
+                <label>Total (BRL)</label>
+                <span class="highlight"
+                    >{{ holding.total_acquisition_brl|format_brl }}</span
+                >
+            </div>
+            <div class="info-item">
+                <label>Custo Médio (USD)</label>
+                <span>{{ holding.average_price_usd|format_usd }}</span>
+            </div>
+            <div class="info-item">
+                <label>Custo Médio (BRL)</label>
+                <span>{{ holding.average_price_brl|format_brl }}</span>
+            </div>
+        </div>
+
+        <details class="trades-details">
+            <summary>Ver {{ holding.trades|length }} operações</summary>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Qtd</th>
+                            <th>Preço (USD)</th>
+                            <th>Total (USD)</th>
+                            <th>PTAX</th>
+                            <th>Total (BRL)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for twp in holding.trades %}
+                        <tr>
+                            <td>
+                                {{ twp.trade.trade_date.strftime('%d/%m/%Y') }}
+                            </td>
+                            <td>{{ twp.trade.quantity }}</td>
+                            <td>{{ twp.trade.price_usd|format_usd }}</td>
+                            <td>{{ twp.trade.total_usd|format_usd }}</td>
+                            <td>R$ {{ "%.4f"|format(twp.ptax_sell_rate) }}</td>
+                            <td>{{ twp.total_brl|format_brl }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3"><strong>Total</strong></td>
+                            <td>
+                                <strong
+                                    >{{ holding.total_acquisition_usd|format_usd
+                                    }}</strong
+                                >
+                            </td>
+                            <td></td>
+                            <td>
+                                <strong
+                                    >{{ holding.total_acquisition_brl|format_brl
+                                    }}</strong
+                                >
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </details>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    .error {
+        background: rgba(210, 15, 57, 0.1);
+        border: 1px solid rgba(210, 15, 57, 0.3);
+        border-radius: 8px;
+        padding: 1rem;
+        color: #d20f39;
+        margin-top: 1rem;
+    }
+
+    .results-header {
+        margin-bottom: 1rem;
+    }
+
+    .results-header h3 {
+        margin: 0 0 0.25rem 0;
+        font-size: 1.1rem;
+    }
+
+    .results-header .subtitle {
+        color: var(--subtext);
+        font-size: 0.8125rem;
+        margin: 0;
+    }
+
+    .declaration-card {
+        background: var(--surface);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .declaration-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .declaration-header .ticker {
+        font-weight: 700;
+        color: var(--accent);
+        font-size: 1rem;
+    }
+
+    .declaration-header .description {
+        color: var(--subtext);
+        font-size: 0.8125rem;
+    }
+
+    .info-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .info-item {
+        font-size: 0.8125rem;
+    }
+
+    .info-item label {
+        display: block;
+        font-size: 0.65rem;
+        color: var(--subtext);
+        text-transform: uppercase;
+        margin-bottom: 0.125rem;
+    }
+
+    .info-item span {
+        font-weight: 500;
+    }
+
+    .info-item span.highlight {
+        color: var(--accent);
+        font-weight: 600;
+    }
+
+    .trades-details {
+        margin-top: 0.5rem;
+    }
+
+    .trades-details summary {
+        cursor: pointer;
+        font-size: 0.8125rem;
+        color: var(--subtext);
+        padding: 0.5rem 0;
+    }
+
+    .trades-details summary:hover {
+        color: var(--text);
+    }
+
+    .trades-details table {
+        margin-top: 0.5rem;
+    }
+
+    .trades-details tfoot td {
+        border-top: 2px solid var(--border);
+        border-bottom: none;
+    }
+</style>
+{% endif %}

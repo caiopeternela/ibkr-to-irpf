@@ -1,19 +1,172 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>IBKR to IRPF</title>
-        <link rel="stylesheet" href="static/style.css">
+        <link rel="stylesheet" href="/static/style.css" />
+        <script src="https://unpkg.com/htmx.org@2.0.4"></script>
     </head>
     <body>
+        <header>
+            <div class="logo">🦁 IBKR to <span>IRPF</span></div>
+            <a
+                href="https://github.com/caiopeternela/ibkr-to-irpf"
+                target="_blank"
+                class="icon-btn"
+                title="GitHub"
+            >
+                <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                >
+                    <path
+                        d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                    />
+                </svg>
+            </a>
+        </header>
+
         <main>
-            <h1>IBKR to IRPF</h1>
-            <form action="/statements" method="post" enctype="multipart/form-data">
-                <label for="statement">Select statement (PDF)</label>
-                <input type="file" id="statement" name="statement" accept=".pdf">
-                <input type="submit" value="Upload & Process">
-            </form>
+            <section class="card">
+                <h2>📖 How to get your statement</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <p>Log in to <strong>Client Portal</strong> at IBKR</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2</div>
+                        <p>
+                            Go to <strong>Performance & Reports</strong> →
+                            <strong>Statements</strong>
+                        </p>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3</div>
+                        <p>Select <strong>Activity</strong> statement type</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">4</div>
+                        <p>
+                            Choose period: <strong>Annual</strong> for the tax
+                            year
+                        </p>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">5</div>
+                        <p>
+                            Select format: <code>CSV</code>
+                        </p>
+                    </div>
+                </div>
+                <div class="tip">
+                    💡 <strong>Tip:</strong> CSV format is structured data
+                    that's easy to parse accurately.
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>📄 Upload Statement</h2>
+
+                <form
+                    id="upload-form"
+                    hx-post="/statements"
+                    hx-target="#results-container"
+                    hx-swap="innerHTML"
+                    hx-indicator="#loading"
+                    hx-encoding="multipart/form-data"
+                >
+                    <div class="upload-area" id="upload-area">
+                        <p>Drag & drop your CSV statement here, or</p>
+                        <label class="btn">
+                            Browse files
+                            <input
+                                type="file"
+                                name="statement"
+                                id="file-input"
+                                accept=".csv"
+                            />
+                        </label>
+                    </div>
+
+                    <div class="file-info" id="file-info">
+                        <span id="file-name"></span>
+                        <button type="button" class="remove" id="remove-file">
+                            ×
+                        </button>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn process-btn"
+                        id="process-btn"
+                        disabled
+                    >
+                        Process Statement
+                    </button>
+                </form>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Processing your statement...</p>
+                </div>
+
+                <div id="results-container">
+                    <div class="empty">
+                        Upload a CSV statement to see your investment summary
+                    </div>
+                </div>
+            </section>
         </main>
+
+        <script>
+            // File upload UI
+            const uploadArea = document.getElementById("upload-area");
+            const fileInput = document.getElementById("file-input");
+            const fileInfo = document.getElementById("file-info");
+            const fileName = document.getElementById("file-name");
+            const removeFile = document.getElementById("remove-file");
+            const processBtn = document.getElementById("process-btn");
+
+            uploadArea.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                uploadArea.classList.add("dragover");
+            });
+
+            uploadArea.addEventListener("dragleave", () => {
+                uploadArea.classList.remove("dragover");
+            });
+
+            uploadArea.addEventListener("drop", (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove("dragover");
+                const file = e.dataTransfer.files[0];
+                if (file && file.name.endsWith(".csv")) {
+                    fileInput.files = e.dataTransfer.files;
+                    selectFile(file);
+                }
+            });
+
+            fileInput.addEventListener("change", (e) => {
+                if (e.target.files[0]) {
+                    selectFile(e.target.files[0]);
+                }
+            });
+
+            removeFile.addEventListener("click", () => {
+                fileInput.value = "";
+                fileInfo.classList.remove("visible");
+                processBtn.disabled = true;
+            });
+
+            function selectFile(file) {
+                fileName.textContent = file.name;
+                fileInfo.classList.add("visible");
+                processBtn.disabled = false;
+            }
+        </script>
     </body>
 </html>
