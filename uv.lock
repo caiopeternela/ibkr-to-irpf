@@ -347,6 +347,7 @@ source = { virtual = "." }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
     { name = "jinja2" },
+    { name = "mangum" },
     { name = "pytest" },
     { name = "python-bcb" },
     { name = "ruff" },
@@ -356,6 +357,7 @@ dependencies = [
 requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.123.9" },
     { name = "jinja2", specifier = ">=3.1.6" },
+    { name = "mangum", specifier = ">=0.20.0" },
     { name = "pytest", specifier = ">=9.0.1" },
     { name = "python-bcb", specifier = ">=0.1.8" },
     { name = "ruff", specifier = ">=0.14.8" },
@@ -469,6 +471,18 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/0f/85/86766dfebfa87bea0ab78e9ff7a4b4b45225df4b4d3b8cc3c03c5cd68464/lxml-6.0.2-cp314-cp314t-win32.whl", hash = "sha256:da08e7bb297b04e893d91087df19638dc7a6bb858a954b0cc2b9f5053c922312", size = 3911420, upload-time = "2025-09-22T04:03:32.198Z" },
     { url = "https://files.pythonhosted.org/packages/fe/1a/b248b355834c8e32614650b8008c69ffeb0ceb149c793961dd8c0b991bb3/lxml-6.0.2-cp314-cp314t-win_amd64.whl", hash = "sha256:252a22982dca42f6155125ac76d3432e548a7625d56f5a273ee78a5057216eca", size = 4406837, upload-time = "2025-09-22T04:03:34.027Z" },
     { url = "https://files.pythonhosted.org/packages/92/aa/df863bcc39c5e0946263454aba394de8a9084dbaff8ad143846b0d844739/lxml-6.0.2-cp314-cp314t-win_arm64.whl", hash = "sha256:bb4c1847b303835d89d785a18801a883436cdfd5dc3d62947f9c49e24f0f5a2c", size = 3822205, upload-time = "2025-09-22T04:03:36.249Z" },
+]
+
+[[package]]
+name = "mangum"
+version = "0.20.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/04/76/03462d8f745a12b40d96b674c6d9c4182594571edc28b47d6ddd9a819ed5/mangum-0.20.0.tar.gz", hash = "sha256:0050447b60d832dcc45cc9d917c9e0f4e9174e2d9630f621d567510d51d286bd", size = 128418, upload-time = "2025-12-27T08:48:37.423Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1d/67/9398a64b5a97a9125fac1b168917cfa7f9d81eddc23bf50dacd4ff999aed/mangum-0.20.0-py3-none-any.whl", hash = "sha256:c945eadc41916f73b6086c0c69935ef4b1d23d27de8dc74ed47b20e204335407", size = 18024, upload-time = "2025-12-27T08:48:35.686Z" },
 ]
 
 [[package]]

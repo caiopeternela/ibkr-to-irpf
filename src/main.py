@@ -7,6 +7,7 @@ from fastapi import FastAPI, Request, UploadFile
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from mangum import Mangum
 
 from src.calculator import calculate_holdings
 from src.parser import parse_statement
@@ -14,6 +15,7 @@ from src.parser import parse_statement
 BASE_DIR = Path(__file__).resolve().parent
 
 app = FastAPI()
+handler = Mangum(app, lifespan="off")
 
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 

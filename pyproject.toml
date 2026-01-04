@@ -10,6 +10,7 @@ dependencies = [
     "python-bcb>=0.1.8",
     "pytest>=9.0.1",
     "ruff>=0.14.8",
+    "mangum>=0.20.0",
 ]
 
 [tool.pytest]
