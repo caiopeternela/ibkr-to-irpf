@@ -315,12 +315,8 @@ th {
     font-size: 0.875rem;
 }
 
-.htmx-request .loading {
+.loading.htmx-request {
     display: block;
-}
-
-.htmx-request #results-container {
-    display: none;
 }
 
 .spinner {
