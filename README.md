@@ -1,6 +1,6 @@
 # IBKR to IRPF
 
-A minimalist tool to process Interactive Brokers statements for Brazilian Income Tax (IRPF) purposes 🦁
+A minimalist tool to process Interactive Brokers (IBKR) statements for Brazilian Income Tax (IRPF) purposes 🦁
 
 ## What it does
 
@@ -33,8 +33,7 @@ uv sync
 ## Usage
 
 ```bash
-cd src
-fastapi dev main.py
+uv run uvicorn src.main:app --reload
 ```
 
 Then open http://localhost:8000 and upload your IBKR CSV statement.
@@ -70,8 +69,7 @@ src/
 ## Running Tests
 
 ```bash
-cd src
-pytest
+uv run pytest src/tests.py
 ```
 
 ## Limitations
