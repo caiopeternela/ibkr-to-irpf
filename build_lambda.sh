@@ -10,9 +10,9 @@ mkdir -p build
 
 echo "📦 Installing production dependencies..."
 uv pip install --target build/ \
-    --python-platform x86_64-manylinux_2_17 \
+    --python-platform x86_64-manylinux_2_28 \
     --python-version 3.12 \
-    -r <(uv pip compile pyproject.toml 2>/dev/null | grep -v "^#")
+    -r requirements-lambda.txt
 
 echo "📂 Copying application source code..."
 cp -r src/ build/src/

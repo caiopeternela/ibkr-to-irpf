@@ -2,7 +2,6 @@ from datetime import date
 from decimal import Decimal
 from pathlib import Path
 
-import uvicorn
 from fastapi import FastAPI, Request, UploadFile
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -93,4 +92,6 @@ async def process_statement(request: Request, statement: UploadFile):
 
 
 if __name__ == "__main__":
+    import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000)
