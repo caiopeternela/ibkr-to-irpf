@@ -12,7 +12,7 @@ echo "📦 Installing production dependencies..."
 uv pip install --target build/ \
     --python-platform x86_64-manylinux_2_28 \
     --python-version 3.12 \
-    -r requirements-lambda.txt
+    -r deployment/requirements-lambda.txt
 
 echo "📂 Copying application source code..."
 cp -r src/ build/src/
